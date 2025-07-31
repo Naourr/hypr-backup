@@ -1,0 +1,12 @@
+add_newline = false
+
+format = '''
+[](bg:blue fg:blue)[『TwinkPad-$username』](bg:blue fg:black)[](bg:none fg:blue) $directory $character
+'''
+
+[character]
+success_symbol = "[▶](bold green)"
+
+[package]
+disabled = true
+
