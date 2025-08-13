@@ -3,7 +3,7 @@
  
 Hyprland on EndevourOS, backup files as of july 31, 2025. contains a janky, modified install script, configs for hypr, waybar, starship, fastfetch, konsole, and a wallpaper. Most apps and packages not included here cuz no way ill remember everything.
  
- ![Preview](assets/hypr-naur.png)
+ ![Preview](assets/ss.png)
 
  Wait. the install script will still install stuff i dont need but yep.
  
