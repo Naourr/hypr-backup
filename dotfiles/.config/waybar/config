@@ -36,7 +36,7 @@
 
     // Modules Right
     "modules-right": [
-        // "custom/updates",
+        "custom/updates",
         "custom/brightness",
         // "hyprland/language",
         "custom/exit",

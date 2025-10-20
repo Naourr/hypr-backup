@@ -1,5 +1,9 @@
 #!/bin/bash
-#CUSTOMIZED BY NAUR, NOT ORIGINAL. JUST FOR BACKUP.
+# modified install script. excludes kitty, alacritty, ghostty, librewolf, zen browser, bitwarden, webcord. something about cleanup.
+# includes konsole, brave as default browser
+# i still had to delete these pero baka galing lang talaga sa endeavourOS online no desktop install yung iba: uxterm/xterm, meld, firefox, veracrypt.
+# still had to install these: vscode, github desktop, cmatrix na cmake, peaclock, cava, swww and gswww, kate, pamac, obs, polkit-gnome.
+
 if [ "$(id -u)" = 0 ]; then
     echo ":: This script shouldn't be run as root."
     exit 1
@@ -129,42 +133,86 @@ figlet "CorePackages"
 echo -e "${NONE}"
 
 # packages
-
 sudo pacman -Sy hyprland waybar rofi-wayland dunst hyprpaper hyprlock hypridle xdg-desktop-portal-hyprland sddm \
-                alacritty vim zsh starship qt5-wayland qt6-wayland cliphist \
-                thunar gvfs thunar-volman tumbler thunar-archive-plugin \
+                konsole vim zsh starship picom qt5-wayland qt6-wayland cliphist \
+                thunar gvfs thunar-volman tumbler thunar-archive-plugin ark \
                 network-manager-applet blueman brightnessctl \
                 slurp grim xclip swappy \
-                ttf-font-awesome otf-font-awesome ttf-fira-sans ttf-fira-code \
+                ttf-font-awesome otf-font-awesome ttf-fira-sans ttf-fira-code   \
                 ttf-firacode-nerd gnome-themes-extra gtk-engine-murrine nwg-look \
-                gnome-keyring --noconfirm
-
-yay -S wlogout waypaper hyprland-qtutils qogir-gtk-theme qogir-icon-theme \
-                pamac-aur visual-studio-code-bin github-desktop-bin --noconfirm
+                --noconfirm
+yay -S wlogout waypaper hyprland-qtutils qogir-gtk-theme qogir-icon-theme --noconfirm
 
 # -----------------------------------------------------
 # development
 # -----------------------------------------------------
 
 if gum confirm "Do you need development setup?" ;then
-    echo -e "${GREEN}"
-    figlet "Git"
-    echo -e "${NONE}"
+  # git
+  echo -e "${GREEN}"
+  figlet "Git"
+  echo -e "${NONE}"
+  git_name=$(gum input --placeholder "Enter git name...")
+  echo "Name: ${git_name}"
+  git_email=$(gum input --placeholder "Enter git email...")
+  echo "Email: ${git_email}"
+  git config --global user.name "${git_name}"
+  git config --global user.email "${git_email}"
+  git config --global pull.ff only
+  ssh-keygen
 
-    git_name=$(gum input --placeholder "Enter git name...")
-    echo "Name: ${git_name}"
-    git_email=$(gum input --placeholder "Enter git email...")
-    echo "Email: ${git_email}"
-    git config --global user.name "${git_name}"
-    git config --global user.email "${git_email}"
-    git config --global pull.ff only
-    ssh-keygen
+  # java
+  echo -e "${GREEN}"
+  figlet "Java"
+  echo -e "${NONE}"
+  sudo pacman -Sy jre21-openjdk jdk21-openjdk maven --noconfirm
+  yay -S google-java-format --noconfirm
 
-    echo -e "${GREEN}"
-    figlet "VSCode"
-    echo -e "${NONE}"
-    sudo pacman -Sy gnome-keyring --noconfirm
-    yay -S visual-studio-code-bin github-desktop-bin --noconfirm
+  # python
+  echo -e "${GREEN}"
+  figlet "Python"
+  echo -e "${NONE}"
+  sudo pacman -Sy python-pip --noconfirm
+
+  # jetbrains
+  yay -S jetbrains-toolbox --noconfirm
+
+  # node
+  echo -e "${GREEN}"
+  figlet "Node"
+  echo -e "${NONE}"
+  yay -S nvm --noconfirm
+  source /usr/share/nvm/init-nvm.sh
+  nvm install --lts
+
+  # docker
+  echo -e "${GREEN}"
+  figlet "Docker"
+  echo -e "${NONE}"
+  sudo pacman -Sy docker --noconfirm
+  sudo systemctl enable --now docker.service
+  sudo usermod -aG docker $USER
+  sudo pacman -Sy docker-compose --noconfirm
+
+  # vscode
+  echo -e "${GREEN}"
+  figlet "VSCode"
+  echo -e "${NONE}"
+  sudo pacman -Sy gnome-keyring --noconfirm
+  yay -S visual-studio-code-bin --noconfirm
+
+  # rest client
+  yay -S bruno-bin --noconfirm
+
+  # neovim
+  echo -e "${GREEN}"
+  figlet "Neovim"
+  echo -e "${NONE}"
+  sudo pacman -Sy neovim fzf zoxide ripgrep fd --noconfirm
+  yay -S vim-plug --noconfirm
+  git clone https://github.com/NvChad/starter ~/.config/nvchad
+  git clone --depth 1 https://github.com/AstroNvim/template ~/.config/astronvim
+  git clone https://github.com/LazyVim/starter ~/.config/lazyvim
 fi
 
 # -----------------------------------------------------
@@ -175,8 +223,8 @@ fi
 echo -e "${GREEN}"
 figlet "GUI Apps"
 echo -e "${NONE}"
-sudo pacman -Sy feh mpv qbittorrent bitwarden --noconfirm
-yay -S onlyoffice-bin brave-bin ventoy-bin webcord --noconfirm
+sudo pacman -Sy okular feh gwenview mpv qbittorrent qalculate-gtk veracrypt --noconfirm
+yay -S brave-bin ventoy-bin --noconfirm
 
 # set default browser
 unset BROWSER
@@ -187,6 +235,7 @@ echo -e "${GREEN}"
 figlet "TerminalUtils"
 echo -e "${NONE}"
 sudo pacman -Sy tmux yazi fastfetch htop --noconfirm
+
 
 # -----------------------------------------------------
 # configs and themes
@@ -233,9 +282,9 @@ monitor=,${resolution},auto,1" > ./config/hypr/conf/monitor.conf
 
 cp -rf ./config/.gtkrc-2.0 ./config/.Xresources ./config/.bashrc ./config/.zshrc ~/
 mkdir -p ~/.config/qBittorrent && cp -rf ./config/qbittorrent/qbittorrent.qbtheme ~/.config/qBittorrent
-cp -rf ./config/alacritty ./config/dunst ./config/gtk-3.0 ./config/gtk-4.0 ./config/hypr ./config/picom \
-    ./config/kitty ./config/scripts ./config/Thunar ./config/wal ./config/waybar \
-    ./config/wlogout ./config/fastfetch ./config/ghostty ./config/starship.toml \
+cp -rf ./config/dunst ./config/gtk-3.0 ./config/gtk-4.0 ./config/hypr ./config/picom \
+    ./config/scripts ./config/Thunar ./config/wal ./config/waybar \
+    ./config/wlogout ./config/starship.toml \
     ~/.config
 sudo sed -i "s/Inherits=.*/Inherits=Qogir-dark/g" /usr/share/icons/default/index.theme
 
@@ -319,6 +368,7 @@ fi
 echo -e "${GREEN}"
 figlet "Cleanup"
 echo -e "${NONE}"
+
 # sudo pacman -Rns $(pacman -Qtdq) --noconfirm
 yay -Sc --noconfirm
 
