@@ -3,6 +3,7 @@
 # includes konsole, brave as default browser
 # i still had to delete these pero baka galing lang talaga sa endeavourOS online no desktop install yung iba: uxterm/xterm, meld, firefox, veracrypt.
 # still had to install these: vscode, github desktop, cmatrix na cmake, peaclock, cava, swww and gswww, kate, pamac, obs, polkit-gnome.
+# day 2 still had to do these: plymouth bgrt, jakoolit simple-sddm.
 
 if [ "$(id -u)" = 0 ]; then
     echo ":: This script shouldn't be run as root."
