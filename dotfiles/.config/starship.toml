@@ -1,7 +1,9 @@
 add_newline = false
 
+# for some reason, blue = pink, black = white, green = purple...
+
 format = '''
-[](bg:blue fg:blue)[『TwinkPad-$username』](bg:blue fg:black)[](bg:none fg:blue) $directory $character
+[](bg:blue fg:blue)[『TwinkPad-$username』](bg:blue fg:bold white)[](bg:none fg:blue) $directory $character
 '''
 
 [character]
