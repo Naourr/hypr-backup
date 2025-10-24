@@ -15,3 +15,7 @@ For when i corrupt my os again.
    packages: swww and gswww (wallpaper manager, cuz waypaper and hyprpaper doesnt work for me), cmatrix (cmake), peaclock, cava, polkit-gnome (authentication agent something so pamac works), plymouth bgrt (archlinux loading screen on boot and power off), jakoolit simple-sddm (lockscreen theme, from github).
    
  stuff that i had to delete after (not sure where they came from but): uxterm/xterm, meld, firefox, veracrypt.
+ 
+ as of oct 24:
+  -i switched to firefox instead of brave because theme-lain.
+  -remember to go to hyprlock.conf to change sleep lockscreen.
