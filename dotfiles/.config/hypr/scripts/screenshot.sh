@@ -10,6 +10,7 @@
 # -----------------------------------------------------
 
 DIR="$HOME/Pictures/screenshots/"
+mkdir -p "$DIR"
 NAME="screenshot_$(date +%d%m%Y_%H%M%S).png"
 
 option2="Selected area"
