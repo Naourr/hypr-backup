@@ -63,7 +63,7 @@ window#waybar {
 #workspaces button {
   border: 0px;
   margin: 4px 5px 4px 0px;
-  padding: 0px 2px 0px 2px;
+  padding: 2px 2px 0px 2px;
   color: @textcolor3;
   transition: all 0.5s ease-in-out;
 }
@@ -76,10 +76,7 @@ window#waybar {
 
 #workspaces button.active {
   color: @textcolor1;
-  background: @workspacesbackground2;
-}
-#workspaces button:nth-child(1).active {
-  background: @color-pink;
+  background: @color-red;
 }
 #workspaces button:nth-child(2).active {
   background: @color-blue;
@@ -87,11 +84,11 @@ window#waybar {
 #workspaces button:nth-child(3).active {
   background: @color-purple;
 }
-#workspaces button:nth-child(4).active {
-  background: @color-green;
+#workspaces button:nth-child(1).active {
+  background: @color-pink;
 }
-#workspaces button:nth-child(5).active {
-  background: @color-red;
+#workspaces button:nth-child(4).active {
+background: @color-red;
 }
 
 /* -----------------------------------------------------
